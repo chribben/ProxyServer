@@ -33,22 +33,21 @@ namespace ProxyServer.Controllers
         private static async Task<IEnumerable<Item>> GetItems()
         {
             IEnumerable<Item> items = new List<Item>();
-            //Get all items
             using (var httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var byteArray = Encoding.ASCII.GetBytes("jayway:jayway");
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
-                    Convert.ToBase64String(byteArray));
-                var response = await httpClient.GetAsync("http://kanban-api-lab.herokuapp.com/items/backlog");
-                string backlog = await response.Content.ReadAsStringAsync();
-                response = await httpClient.GetAsync("http://kanban-api-lab.herokuapp.com/items/working");
-                string working = await response.Content.ReadAsStringAsync();
-                response = await httpClient.GetAsync("http://kanban-api-lab.herokuapp.com/items/verify");
-                string verify = await response.Content.ReadAsStringAsync();
-                response = await httpClient.GetAsync("http://kanban-api-lab.herokuapp.com/items/done");
-                string done = await response.Content.ReadAsStringAsync();
+                    Convert.ToBase64String(Encoding.ASCII.GetBytes("jayway:jayway")));
+                var httpResponseMessages = await Task.WhenAll(
+                    httpClient.GetAsync("http://kanban-api-lab.herokuapp.com/items/backlog"), 
+                    httpClient.GetAsync("http://kanban-api-lab.herokuapp.com/items/working"),
+                    httpClient.GetAsync("http://kanban-api-lab.herokuapp.com/items/verify"), 
+                    httpClient.GetAsync("http://kanban-api-lab.herokuapp.com/items/done"));
+                string working = await httpResponseMessages[0].Content.ReadAsStringAsync();
+                string backlog = await httpResponseMessages[1].Content.ReadAsStringAsync();
+                string verify = await httpResponseMessages[2].Content.ReadAsStringAsync();
+                string done = await httpResponseMessages[3].Content.ReadAsStringAsync();
 
                 var backlogItems = Newtonsoft.Json.JsonConvert.DeserializeObject<IEnumerable<Item>>(backlog);
                 var workingItems = Newtonsoft.Json.JsonConvert.DeserializeObject<IEnumerable<Item>>(working);
@@ -59,19 +58,41 @@ namespace ProxyServer.Controllers
             return items;
         }
 
-        public async Task<ViewResult> ToWorking(int id)
+        public Task<ViewResult> ToBacklog(int id)
+        {
+            return GetUpdate(id, "http://kanban-api-lab.herokuapp.com/items/backlog");
+        }
+        public Task<ViewResult> ToWorking(int id)
+        {
+            return GetUpdate(id, "http://kanban-api-lab.herokuapp.com/items/working");
+        }
+        public Task<ViewResult> ToVerify(int id)
+        {
+            return GetUpdate(id, "http://kanban-api-lab.herokuapp.com/items/verify");
+        }
+        public Task<ViewResult> ToDone(int id)
+        {
+            return GetUpdate(id, "http://kanban-api-lab.herokuapp.com/items/done");
+        }
+
+        public async Task<ViewResult> GetUpdate(int id, string url)
         {
             using (var httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Accept.Clear();
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var byteArray = Encoding.ASCII.GetBytes("jayway:jayway");
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",Convert.ToBase64String(byteArray));
-                await httpClient.PostAsync("http://kanban-api-lab.herokuapp.com/items/working",
-                    new StringContent("{id:" + id + "}"));
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+                var content = new FormUrlEncodedContent(new[] 
+                    {
+                        new KeyValuePair<string, string>("id", id.ToString())
+                    }); ;
+                await httpClient.PostAsync(url, content);
+
             }
             var items = await GetItems();
             return View("Index", items);
+            
         }
     }
 }

@@ -64,7 +64,20 @@
              {
                  <span>&nbsp;</span>
              }*<br>
-            <button><</button> <button>></button><br />
+            <div style="display:inline-block">
+                @using (Html.BeginForm("ToBacklog", "Home"))
+                {
+                    @Html.Hidden("id", item.Id)
+                    <input type="submit" value="&lt;">
+                }
+            </div>
+            <div style="display:inline-block">
+                @using (Html.BeginForm("ToVerify", "Home"))
+                {
+                    @Html.Hidden("id", item.Id)
+                    <input type="submit" value="&gt;">
+                }
+            </div><br/>
             *****************************
         </div>
     }
@@ -97,7 +110,20 @@
              {
                  <span>&nbsp;</span>
              }*<br>
-            <button><</button> <button>></button><br />
+            <div style="display:inline-block">
+                @using (Html.BeginForm("ToWorking", "Home"))
+                {
+                    @Html.Hidden("id", item.Id)
+                    <input type="submit" value="&lt;">
+                }
+            </div>
+            <div style="display:inline-block">
+                @using (Html.BeginForm("ToDone", "Home"))
+                {
+                    @Html.Hidden("id", item.Id)
+                    <input type="submit" value="&gt;">
+                }
+            </div><br/>
             *****************************
         </div>
     }
@@ -130,7 +156,11 @@
             {
                 <span>&nbsp;</span>
             }*<br>
-            <button>></button><br />
+            @using (Html.BeginForm("ToBacklog", "Home"))
+            {
+                @Html.Hidden("id", item.Id)
+                <input type="submit" value="&gt;">
+            }
             *****************************
         </div>
     }
