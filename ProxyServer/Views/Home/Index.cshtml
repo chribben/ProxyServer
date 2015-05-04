@@ -27,7 +27,11 @@
              {
                  <span>&nbsp;</span>
              }*<br>
-            <button><</button><br />
+            @using (Html.BeginForm("ToWorking", "Home"))
+            {
+                @Html.Hidden("id", item.Id)
+                <input type="submit" value="&gt;" >
+            }
             *****************************
         </div>
     }
