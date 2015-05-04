@@ -1,1 +1,133 @@
-﻿Hello World!!!!
+﻿@model IEnumerable<ProxyServer.Controllers.Item>
+<h1 style="font-family: monospace">KANBAN BOARD</h1>
+<div style="float:left; width:20%">
+    <span style="font-weight: bold">Backlog</span>
+    @foreach (var item in Model.Where(m => m.Status == "backlog"))
+    {
+        <div style="font-family: monospace">
+            *****************************<br>
+            @item.Title<br />
+            *@for (int c = 0; c < 13; c++)
+             {
+                 <span style="color:white">*</span>
+             }*<br>
+            *@for (int c = 0; c < 13; c++)
+             {
+                 <span>&nbsp;</span>
+             }*<br>
+            *@for (int c = 0; c < 13; c++)
+             {
+                 <span>&nbsp;</span>
+             }*<br>
+            *@for (int c = 0; c < 13; c++)
+             {
+                 <span>&nbsp;</span>
+             }*<br>
+            *@for (int c = 0; c < 13; c++)
+             {
+                 <span>&nbsp;</span>
+             }*<br>
+            <button><</button><br />
+            *****************************
+        </div>
+    }
+</div>
+<div style="width:6%; float:left"></div>
+<div style="float:left; width:20%">
+    <span style="font-weight: bold">Working</span>
+    @foreach (var item in Model.Where(m => m.Status == "working"))
+    {
+        <div style="font-family: monospace">
+            *****************************<br>
+            @item.Title<br />
+            *@for (int c = 0; c < 13; c++)
+             {
+                 <span style="color:white">*</span>
+             }*<br>
+            *@for (int c = 0; c < 13; c++)
+             {
+                 <span>&nbsp;</span>
+             }*<br>
+            *@for (int c = 0; c < 13; c++)
+             {
+                 <span>&nbsp;</span>
+             }*<br>
+            *@for (int c = 0; c < 13; c++)
+             {
+                 <span>&nbsp;</span>
+             }*<br>
+            *@for (int c = 0; c < 13; c++)
+             {
+                 <span>&nbsp;</span>
+             }*<br>
+            <button><</button> <button>></button><br />
+            *****************************
+        </div>
+    }
+</div>
+<div style="width:6%; float:left"></div>
+<div style="float:left; width:20%">
+    <span style="font-weight: bold">Verify</span>
+    @foreach (var item in Model.Where(m => m.Status == "verify"))
+    {
+        <div style="font-family: monospace">
+            *****************************<br>
+            @item.Title<br />
+            *@for (int c = 0; c < 13; c++)
+             {
+                 <span style="color:white">*</span>
+             }*<br>
+            *@for (int c = 0; c < 13; c++)
+             {
+                 <span>&nbsp;</span>
+             }*<br>
+            *@for (int c = 0; c < 13; c++)
+             {
+                 <span>&nbsp;</span>
+             }*<br>
+            *@for (int c = 0; c < 13; c++)
+             {
+                 <span>&nbsp;</span>
+             }*<br>
+            *@for (int c = 0; c < 13; c++)
+             {
+                 <span>&nbsp;</span>
+             }*<br>
+            <button><</button> <button>></button><br />
+            *****************************
+        </div>
+    }
+</div>
+<div style="width:6%; float:left"></div>
+<div style="float:left; width:20%">
+    <span style="font-weight: bold">Done</span>
+    @foreach (var item in Model.Where(m => m.Status == "done"))
+    {
+        <div style="font-family: monospace">
+            *****************************<br>
+            @item.Title<br />
+            *@for (int c = 0; c < 13; c++)
+            {
+                <span style="color:white">*</span>
+            }*<br>
+            *@for (int c = 0; c < 13; c++)
+            {
+                <span>&nbsp;</span>
+            }*<br>
+            *@for (int c = 0; c < 13; c++)
+            {
+                <span>&nbsp;</span>
+            }*<br>
+            *@for (int c = 0; c < 13; c++)
+            {
+                <span>&nbsp;</span>
+            }*<br>
+            *@for (int c = 0; c < 13; c++)
+            {
+                <span>&nbsp;</span>
+            }*<br>
+            <button>></button><br />
+            *****************************
+        </div>
+    }
+</div>
