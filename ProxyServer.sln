@@ -5,6 +5,17 @@ VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProxyServer", "ProxyServer\ProxyServer.csproj", "{F09EE0B0-B99E-4478-B502-3F67E3D894B6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{1800CE03-782F-4048-9F48-371ECC093129}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\AzureWebsitePublishModule.psm1 = PublishScripts\AzureWebsitePublishModule.psm1
+		PublishScripts\Publish-WebApplicationWebsite.ps1 = PublishScripts\Publish-WebApplicationWebsite.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{E9E46E2C-ADC7-4D11-A730-C51A7789D9BB}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Configurations\ProxyServer-WAWS-dev.json = PublishScripts\Configurations\ProxyServer-WAWS-dev.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +29,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E9E46E2C-ADC7-4D11-A730-C51A7789D9BB} = {1800CE03-782F-4048-9F48-371ECC093129}
 	EndGlobalSection
 EndGlobal
