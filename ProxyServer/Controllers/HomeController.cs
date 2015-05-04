@@ -58,24 +58,24 @@ namespace ProxyServer.Controllers
             return items;
         }
 
-        public Task<ViewResult> ToBacklog(int id)
+        public Task<RedirectResult> ToBacklog(int id)
         {
             return GetUpdate(id, "http://kanban-api-lab.herokuapp.com/items/backlog");
         }
-        public Task<ViewResult> ToWorking(int id)
+        public Task<RedirectResult> ToWorking(int id)
         {
             return GetUpdate(id, "http://kanban-api-lab.herokuapp.com/items/working");
         }
-        public Task<ViewResult> ToVerify(int id)
+        public Task<RedirectResult> ToVerify(int id)
         {
             return GetUpdate(id, "http://kanban-api-lab.herokuapp.com/items/verify");
         }
-        public Task<ViewResult> ToDone(int id)
+        public Task<RedirectResult> ToDone(int id)
         {
             return GetUpdate(id, "http://kanban-api-lab.herokuapp.com/items/done");
         }
 
-        public async Task<ViewResult> GetUpdate(int id, string url)
+        public async Task<RedirectResult> GetUpdate(int id, string url)
         {
             using (var httpClient = new HttpClient())
             {
@@ -90,9 +90,8 @@ namespace ProxyServer.Controllers
                 await httpClient.PostAsync(url, content);
 
             }
-            var items = await GetItems();
-            return View("Index", items);
-            
+            return Redirect("Index");
+
         }
     }
 }
